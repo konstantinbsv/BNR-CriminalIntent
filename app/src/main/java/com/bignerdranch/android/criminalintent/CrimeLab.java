@@ -20,6 +20,14 @@ public class CrimeLab {
     //Private constructor for singleton
     private CrimeLab(Context context){
         mCrimes = new ArrayList<>(); //Infer list items type based on variable declaration
+
+        //Populate List<Crime> mCrimes with 100 test crimes
+        for (int i = 0; i < 100; i++ ){
+            Crime crime = new Crime();      //Create new Crime instance
+            crime.setTitle("Crime #" + i);  //Set title with number
+            crime.setSolved(i % 2 == 0);    //Set even as solved
+            mCrimes.add(crime);             //Append to mCrimes List
+        }
     }
 
     //getCrimes getter
