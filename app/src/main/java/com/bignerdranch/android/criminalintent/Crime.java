@@ -11,7 +11,7 @@ public class Crime {
 
     public Crime(){
         mId = UUID.randomUUID();
-        mDate = new Date();
+        mDate = new Date();   //Empty constructor for date returns current date by default
     }
 
     //Getters and Setters
