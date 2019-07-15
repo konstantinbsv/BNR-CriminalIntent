@@ -5,7 +5,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -14,6 +13,7 @@ import java.util.List;
 
 public class CrimeListFragment extends Fragment {
     private RecyclerView mCrimeRecyclerView;
+    private CrimeAdapter mAdapter;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
@@ -22,8 +22,22 @@ public class CrimeListFragment extends Fragment {
         mCrimeRecyclerView = (RecyclerView) view.findViewById(R.id.crime_recycler_view);
         mCrimeRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
+        updateUI();
+
         return view;
     }
+
+    private void updateUI(){
+        CrimeLab crimeLab = CrimeLab.get(getActivity()); //Call singleton method of CrimeLab
+        List<Crime> crimes = crimeLab.getCrimes();  //Get list of crimes from CrimeLab object crimeLab, assign it to List<of Crimes> crimes
+
+        mAdapter = new CrimeAdapter(crimes); //New CrimeAdapter object initialized with List<of Crimes> crimes
+        mCrimeRecyclerView.setAdapter(mAdapter); //Set mCrimesRecyclerView's adapter to our new mAdapter
+    }
+
+
+    /*** Inner Classes***/
+
         /* Inner Class. ViewHolder will inflate and own layout */
         private class CrimeHolder extends RecyclerView.ViewHolder{
             private CrimeHolder(LayoutInflater inflater, ViewGroup parent){
@@ -43,6 +57,7 @@ public class CrimeListFragment extends Fragment {
 
             private List<Crime> mCrimes; //Define a list of Crime objects
 
+            //Constructor
             public CrimeAdapter(List<Crime> crimes){
                 mCrimes = crimes;   //Populate mCrimes list from list passed to constructor
             }

@@ -11,6 +11,7 @@ public class CrimeLab {
 
     private List<Crime> mCrimes;
 
+    //Singleton method for CrimeLab
     public static CrimeLab get(Context context){
         if(sCrimeLab == null){
             sCrimeLab = new CrimeLab(context);
