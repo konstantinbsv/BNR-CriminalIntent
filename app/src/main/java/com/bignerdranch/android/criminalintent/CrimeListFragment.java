@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -53,11 +54,13 @@ public class CrimeListFragment extends Fragment {
              * @param inflater  inflater which will inflate list item
              * @param parent    parent ViewGroup
              */
-            private CrimeHolder(LayoutInflater inflater, ViewGroup parent){
+            private CrimeHolder(LayoutInflater inflater, ViewGroup parent, int viewType){
+
 
                 /* Call ViewHolder's (parent's) constructor, pass to it inflated
                  * list_item_crime layout */
-                super(inflater.inflate(R.layout.list_item_crime, parent, false));
+                //Will inflate different layout depending on viewType
+                super(inflater.inflate((viewType == 1) ? R.layout.list_item_crime_serious : R.layout.list_item_crime, parent, false));
                 /* base ViewHolder class (super) will hold fragment_crime_list hierarchy
                  * in ViewHolder's itemView field */
 
@@ -67,6 +70,17 @@ public class CrimeListFragment extends Fragment {
                 /* Pull out and inflate TextView Widgets */
                 mTitleTextView = (TextView) itemView.findViewById(R.id.crime_title);
                 mDateTextView  = (TextView) itemView.findViewById(R.id.crime_date);
+
+                /* If this is a serious crime with emergency button, add a listener to it */
+                if(viewType == 1){
+                   Button mCallPoliceButton = (Button) itemView.findViewById(R.id.emergency_button);
+                   mCallPoliceButton.setOnClickListener(new View.OnClickListener() {
+                       @Override
+                       public void onClick(View view) {
+                           Toast.makeText(getActivity(), getString(R.string.emergency_button_label), Toast.LENGTH_LONG).show();
+                       }
+                   });
+                }
             }
 
             /** Called each time a new crime should be displayed in CrimeHolder (the ViewHolder)
@@ -109,7 +123,7 @@ public class CrimeListFragment extends Fragment {
                 LayoutInflater layoutInflater = LayoutInflater.from(getActivity());
 
                 //Pass layoutInflater and construct a new CrimeHolder
-                return new CrimeHolder(layoutInflater, parent);
+                return new CrimeHolder(layoutInflater, parent, viewType);
             }
 
             @Override
