@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -40,7 +41,7 @@ public class CrimeListFragment extends Fragment {
     /*** Inner Classes***/
 
         /** ViewHolder will inflate and own layout */
-        private class CrimeHolder extends RecyclerView.ViewHolder{
+        private class CrimeHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
             private TextView mTitleTextView;    //Will display crime title
             private TextView mDateTextView;     //Will display crime date
@@ -60,6 +61,9 @@ public class CrimeListFragment extends Fragment {
                 /* base ViewHolder class (super) will hold fragment_crime_list hierarchy
                  * in ViewHolder's itemView field */
 
+                //itemView holds reference to View for entire row (passed to super above)
+                itemView.setOnClickListener(this);
+
                 /* Pull out and inflate TextView Widgets */
                 mTitleTextView = (TextView) itemView.findViewById(R.id.crime_title);
                 mDateTextView  = (TextView) itemView.findViewById(R.id.crime_date);
@@ -72,6 +76,12 @@ public class CrimeListFragment extends Fragment {
                 mCrime = crime;
                 mTitleTextView.setText(mCrime.getTitle());
                 mDateTextView.setText(mCrime.getDate().toString());
+            }
+
+            /* CrimeHolder itself implements OnClickListener interface => it is the receiver for lick events */
+            @Override
+            public void onClick(View view){
+                Toast.makeText(getActivity(), mCrime.getTitle() + " clicked!", Toast.LENGTH_LONG).show();
             }
         }
 
