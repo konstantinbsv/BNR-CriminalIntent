@@ -27,6 +27,7 @@ public class CrimeLab {
             Crime crime = new Crime();      //Create new Crime instance
             crime.setTitle("Crime #" + i);  //Set title with number
             crime.setSolved(i % 2 == 0);    //Set even as solved
+            crime.setRequiresPolice(i % 9 ==0); //Every 9th crime is serious
             mCrimes.add(crime);             //Append to mCrimes List
         }
     }
