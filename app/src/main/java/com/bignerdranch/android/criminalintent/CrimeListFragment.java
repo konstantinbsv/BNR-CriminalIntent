@@ -143,7 +143,7 @@ public class CrimeListFragment extends Fragment {
                     return 1;   //ViewType = 1 requires police
                 }
                 else{
-                    return 0;   //ViewType = 0 normal
+                    return 0;   //ViewType = 0 normal 
                 }
             }
         }
