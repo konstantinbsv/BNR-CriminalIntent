@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -45,6 +46,7 @@ public class CrimeListFragment extends Fragment {
 
             private TextView mTitleTextView;    //Will display crime title
             private TextView mDateTextView;     //Will display crime date
+            private ImageView mSolvedImageView;  //Handcuffs icon for solved crime
 
             private Crime mCrime;
 
@@ -67,6 +69,7 @@ public class CrimeListFragment extends Fragment {
                 /* Pull out and inflate TextView Widgets */
                 mTitleTextView = (TextView) itemView.findViewById(R.id.crime_title);
                 mDateTextView  = (TextView) itemView.findViewById(R.id.crime_date);
+                mSolvedImageView = (ImageView) itemView.findViewById(R.id.crime_solved);
             }
 
             /** Called each time a new crime should be displayed in CrimeHolder (the ViewHolder)
@@ -76,6 +79,7 @@ public class CrimeListFragment extends Fragment {
                 mCrime = crime;
                 mTitleTextView.setText(mCrime.getTitle());
                 mDateTextView.setText(mCrime.getDate().toString());
+                mSolvedImageView.setVisibility(mCrime.isSolved() ? View.VISIBLE : View.GONE);
             }
 
             /* CrimeHolder itself implements OnClickListener interface => it is the receiver for lick events */
