@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -38,26 +39,54 @@ public class CrimeListFragment extends Fragment {
 
     /*** Inner Classes***/
 
-        /* Inner Class. ViewHolder will inflate and own layout */
+        /** ViewHolder will inflate and own layout */
         private class CrimeHolder extends RecyclerView.ViewHolder{
+
+            private TextView mTitleTextView;    //Will display crime title
+            private TextView mDateTextView;     //Will display crime date
+
+            private Crime mCrime;
+
+            /** CrimeHolder constructor, called by Adapter's overridden onCreateViewHolder()
+             *
+             * @param inflater  inflater which will inflate list item
+             * @param parent    parent ViewGroup
+             */
             private CrimeHolder(LayoutInflater inflater, ViewGroup parent){
 
                 /* Call ViewHolder's (parent's) constructor, pass to it inflated
                  * list_item_crime layout */
                 super(inflater.inflate(R.layout.list_item_crime, parent, false));
-
-                /* base ViewHolder class will hold fragment_crime_list hierarchy
+                /* base ViewHolder class (super) will hold fragment_crime_list hierarchy
                  * in ViewHolder's itemView field */
+
+                /* Pull out and inflate TextView Widgets */
+                mTitleTextView = (TextView) itemView.findViewById(R.id.crime_title);
+                mDateTextView  = (TextView) itemView.findViewById(R.id.crime_date);
+            }
+
+            /** Called each time a new crime should be displayed in CrimeHolder (the ViewHolder)
+             * @param crime Crime object to be displayed, i.e., bound to the Holder
+             */
+            public void bind(Crime crime){
+                mCrime = crime;
+                mTitleTextView.setText(mCrime.getTitle());
+                mDateTextView.setText(mCrime.getDate().toString());
             }
         }
 
-        /* Another Inner Class. Adapter will help RecycleView display a new ViewHolder
+
+
+        /** Adapter will help RecycleView display a new ViewHolder
          * and connect Crime object's data with it */
         private class CrimeAdapter extends RecyclerView.Adapter<CrimeHolder>{
 
             private List<Crime> mCrimes; //Define a list of Crime objects
 
-            //Constructor
+            /** Constructor
+             *
+             * @param crimes list of Crime objects
+             */
             public CrimeAdapter(List<Crime> crimes){
                 mCrimes = crimes;   //Populate mCrimes list from list passed to constructor
             }
@@ -69,13 +98,14 @@ public class CrimeListFragment extends Fragment {
                 //Create layout inflater
                 LayoutInflater layoutInflater = LayoutInflater.from(getActivity());
 
-                //Use layoutInflater to construct a new CrimeHolder
+                //Pass layoutInflater and construct a new CrimeHolder
                 return new CrimeHolder(layoutInflater, parent);
             }
 
             @Override
             public void onBindViewHolder(CrimeHolder holder, int position){
-
+                Crime crime = mCrimes.get(position);
+                holder.bind(crime);
             }
 
             @Override
