@@ -8,13 +8,33 @@ public class Crime {
     private String mTitle;
     private Date mDate;
     private boolean mSolved;
+    private boolean mRequiresPolice;
 
     public Crime(){
         mId = UUID.randomUUID();
-        mDate = new Date();   //Empty constructor for date returns current date by default
+        mDate = new Date();         //Empty constructor for date returns current date by default
+        mRequiresPolice = false;    //Default crime does not require police
     }
 
+    /** Overloaded constructor with boolean parameter for setting police requirement
+     * @param reqPolice police requirement
+     * */
+    public Crime(boolean reqPolice){
+        mId = UUID.randomUUID();
+        mDate = new Date();             //Empty constructor for date returns current date by default
+        mRequiresPolice = reqPolice;    //Set police requirement from argument
+    }
+
+
     //Getters and Setters
+    public boolean isRequiresPolice() {
+        return mRequiresPolice;
+    }
+
+    public void setRequiresPolice(boolean mRequiresPolice) {
+        this.mRequiresPolice = mRequiresPolice;
+    }
+
     public UUID getId() {
         return mId;
     }
