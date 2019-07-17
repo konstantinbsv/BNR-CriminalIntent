@@ -18,10 +18,31 @@ import java.util.UUID;
 import static android.widget.CompoundButton.*;  //Imports all static members from CompoundButton type
 
 public class CrimeFragment extends Fragment {
+
+    private static String ARG_CRIME_ID = "crime_id";
+
     private Crime mCrime;
     private EditText mTitleField;
     private Button mDateButton;
     private CheckBox mSolvedCheckBox;
+
+    /**
+     * Call this method when you need a new CrimeFragment
+     * <p>
+     * Creates new CrimeFragment and attaches an Bundle containing
+     * crimeId as an argument
+     * </p>
+     * @param crimeId crime UUID
+     * @return CrimeFragment with attached crime UUID as args Bundle
+     */
+    public static CrimeFragment newInstance(UUID crimeId){
+        Bundle args = new Bundle();
+        args.putSerializable(ARG_CRIME_ID, crimeId);
+
+        CrimeFragment fragment = new CrimeFragment();
+        fragment.setArguments(args);
+        return fragment;
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
