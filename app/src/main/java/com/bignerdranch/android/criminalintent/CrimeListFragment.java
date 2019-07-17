@@ -1,5 +1,6 @@
 package com.bignerdranch.android.criminalintent;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.format.DateFormat;
 import android.view.LayoutInflater;
@@ -40,7 +41,7 @@ public class CrimeListFragment extends Fragment {
     }
 
 
-    /*** Inner Classes***/
+    /* Inner Classes */
 
         /** ViewHolder will inflate and own layout */
         private class CrimeHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
@@ -79,7 +80,6 @@ public class CrimeListFragment extends Fragment {
             public void bind(Crime crime){
                 mCrime = crime;
                 mTitleTextView.setText(mCrime.getTitle());
-                //mDateTextView.setText(mCrime.getDate().toString());
                 mDateTextView.setText(DateFormat.format("EEEE, MMM d, yyyy 'at' HH:mm zzz", mCrime.getDate()));
                 mSolvedImageView.setVisibility(mCrime.isSolved() ? View.VISIBLE : View.GONE);
             }
@@ -87,7 +87,8 @@ public class CrimeListFragment extends Fragment {
             /* CrimeHolder itself implements OnClickListener interface => it is the receiver for lick events */
             @Override
             public void onClick(View view){
-                Toast.makeText(getActivity(), mCrime.getTitle() + " clicked!", Toast.LENGTH_LONG).show();
+                Intent intent = CrimeActivity.newIntent(getActivity(), mCrime.getId());
+                startActivity(intent);
             }
         }
 
