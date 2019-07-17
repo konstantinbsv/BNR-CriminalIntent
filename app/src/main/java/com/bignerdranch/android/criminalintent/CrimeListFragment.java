@@ -32,12 +32,25 @@ public class CrimeListFragment extends Fragment {
         return view;
     }
 
+    @Override
+    public void onResume(){
+        super.onResume();
+        updateUI();
+    }
+
     private void updateUI(){
         CrimeLab crimeLab = CrimeLab.get(getActivity()); //Call singleton method of CrimeLab
         List<Crime> crimes = crimeLab.getCrimes();  //Get list of crimes from CrimeLab object crimeLab, assign it to List<of Crimes> crimes
 
-        mAdapter = new CrimeAdapter(crimes); //New CrimeAdapter object initialized with List<of Crimes> crimes
-        mCrimeRecyclerView.setAdapter(mAdapter); //Set mCrimesRecyclerView's adapter to our new mAdapter
+        //If adapter does not exist, create a new one
+        if(mAdapter == null) {
+            mAdapter = new CrimeAdapter(crimes); //New CrimeAdapter object initialized with List<of Crimes> crimes
+            mCrimeRecyclerView.setAdapter(mAdapter); //Set mCrimesRecyclerView's adapter to our new mAdapter
+        }
+        //If it does, notify it that the data set may have changed
+        else{
+            mAdapter.notifyDataSetChanged();
+        }
     }
 
 
