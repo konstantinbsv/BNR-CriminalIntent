@@ -19,6 +19,7 @@ import java.util.List;
 public class CrimeListFragment extends Fragment {
     private RecyclerView mCrimeRecyclerView;
     private CrimeAdapter mAdapter;
+    private int mClickedPosition;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
@@ -49,7 +50,7 @@ public class CrimeListFragment extends Fragment {
         }
         //If it does, notify it that the data set may have changed
         else{
-            mAdapter.notifyDataSetChanged();
+            mAdapter.notifyItemChanged(mClickedPosition);   //Update only clicked item
         }
     }
 
@@ -64,6 +65,7 @@ public class CrimeListFragment extends Fragment {
             private ImageView mSolvedImageView;  //Handcuffs icon for solved crime
 
             private Crime mCrime;
+            private int mPosition;  //Position of holder assigned by Adapter
 
             /** CrimeHolder constructor, called by Adapter's overridden onCreateViewHolder()
              *
@@ -90,8 +92,9 @@ public class CrimeListFragment extends Fragment {
             /** Called each time a new crime should be displayed in CrimeHolder (the ViewHolder)
              * @param crime Crime object to be displayed, i.e., bound to the Holder
              */
-            public void bind(Crime crime){
+            public void bind(Crime crime, int position){
                 mCrime = crime;
+                mPosition = position;   //Position of this holder as specified by adapter
                 mTitleTextView.setText(mCrime.getTitle());
                 mDateTextView.setText(DateFormat.format("EEEE, MMM d, yyyy 'at' HH:mm zzz", mCrime.getDate()));
                 mSolvedImageView.setVisibility(mCrime.isSolved() ? View.VISIBLE : View.GONE);
@@ -100,6 +103,7 @@ public class CrimeListFragment extends Fragment {
             /* CrimeHolder itself implements OnClickListener interface => it is the receiver for lick events */
             @Override
             public void onClick(View view){
+                mClickedPosition = mPosition;   //Set the position of the item clicked
                 Intent intent = CrimeActivity.newIntent(getActivity(), mCrime.getId());
                 startActivity(intent);
             }
@@ -135,7 +139,7 @@ public class CrimeListFragment extends Fragment {
             @Override
             public void onBindViewHolder(CrimeHolder holder, int position){
                 Crime crime = mCrimes.get(position);
-                holder.bind(crime);
+                holder.bind(crime, position);
             }
 
             @Override
