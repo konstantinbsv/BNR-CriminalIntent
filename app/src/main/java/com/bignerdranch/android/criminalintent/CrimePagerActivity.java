@@ -58,12 +58,6 @@ public class CrimePagerActivity extends AppCompatActivity {
         });
 
 
-        for (int i = 0; i < mCrimes.size(); i++)
-            if(mCrimes.get(i).getId().equals(crimeId)){
-                mViewPager.setCurrentItem(i);
-                break;
-            }
-
         mJumpToFirst = (Button) findViewById(R.id.jump_to_first_button);
         mJumpToFirst.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -89,10 +83,29 @@ public class CrimePagerActivity extends AppCompatActivity {
 
             @Override
             public void onPageSelected(int position) {
-                mJumpToFirst.setEnabled(position != 0); //Disable Jump to First button on first page
-                mJumpToLast.setEnabled(position != (mCrimes.size() - 1) ); //Disable Last Button on last page
+                updateButtonStatus(position);
             }
         });
 
+        //Set position of ViewPager to match position of crime with crime ID that was
+        //passed as extra on Intent from CrimeListFragment
+        for (int i = 0; i < mCrimes.size(); i++)
+            if(mCrimes.get(i).getId().equals(crimeId)){
+                mViewPager.setCurrentItem(i);
+                updateButtonStatus(i);
+                break;
+            }
+
+    }
+
+    /**
+     * Will enable/disable Jump to First and Last buttons depending
+     * on current position of ViewPager
+     *
+     * @param position position of current item set by ViewPager
+     */
+    private void updateButtonStatus(int position){
+        mJumpToFirst.setEnabled(position != 0); //Disable Jump to First button on first page
+        mJumpToLast.setEnabled(position != (mCrimes.size() - 1) ); //Disable Last Button on last page
     }
 }
