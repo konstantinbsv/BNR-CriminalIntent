@@ -80,6 +80,7 @@ public class CrimePagerActivity extends AppCompatActivity {
             }
         });
 
+        //Add OnPageChangeListener to ViewPager to enable/disable buttons
         mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) { }
@@ -88,8 +89,8 @@ public class CrimePagerActivity extends AppCompatActivity {
 
             @Override
             public void onPageSelected(int position) {
-                mJumpToFirst.setEnabled(position != 0);
-                mJumpToLast.setEnabled(position != (mCrimes.size() - 1) );
+                mJumpToFirst.setEnabled(position != 0); //Disable Jump to First button on first page
+                mJumpToLast.setEnabled(position != (mCrimes.size() - 1) ); //Disable Last Button on last page
             }
         });
 
