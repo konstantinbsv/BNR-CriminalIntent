@@ -12,6 +12,7 @@ import android.widget.CompoundButton;
 import android.widget.EditText;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 
 import java.util.UUID;
 
@@ -77,9 +78,16 @@ public class CrimeFragment extends Fragment {
             }
         });
 
-        mDateButton = (Button) v.findViewById(R.id.crime_date); //Inflate button
-        mDateButton.setText(mCrime.getDate().toString());   //Set button text to date of mCrime object (current date by default)
-        mDateButton.setEnabled(false);  //Disabled, user cannot interact with it
+        mDateButton = (Button) v.findViewById(R.id.crime_date); // Inflate button
+        mDateButton.setText(mCrime.getDate().toString());   // Set button text to date of mCrime object (current date by default)
+        mDateButton.setOnClickListener(new OnClickListener() { // Create DatePicker dialog
+            @Override
+            public void onClick(View view) {
+                FragmentManager manager = getFragmentManager(); // get FM associated with this fragment's activity
+                DatePickerFragment dialog = new DatePickerFragment(); // create new DPF
+                dialog.show(manager, DIALOG_DATE); // call DPF's show() method, passing in fManager and id string
+            }
+        });
 
         mSolvedCheckBox = (CheckBox) v.findViewById(R.id.crime_solved);
         mSolvedCheckBox.setChecked(mCrime.isSolved());
