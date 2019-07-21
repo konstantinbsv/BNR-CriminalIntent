@@ -15,11 +15,13 @@ import androidx.fragment.app.Fragment;
 
 import java.util.UUID;
 
-import static android.widget.CompoundButton.*;  //Imports all static members from CompoundButton type
+import static android.widget.CompoundButton.*;  // Imports all static members from CompoundButton type
 
 public class CrimeFragment extends Fragment {
 
     private static String ARG_CRIME_ID = "crime_id";
+    private static String DIALOG_DATE = "DialogDate";   // parameter to uniquely identify DialogFragment
+                                                        // in FragmentManager's list
 
     private Crime mCrime;
     private EditText mTitleField;
