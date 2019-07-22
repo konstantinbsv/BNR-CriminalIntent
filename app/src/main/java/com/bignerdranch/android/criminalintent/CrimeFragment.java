@@ -23,6 +23,7 @@ public class CrimeFragment extends Fragment {
     private static String ARG_CRIME_ID = "crime_id";
     private static String DIALOG_DATE = "DialogDate";   // parameter to uniquely identify DialogFragment
                                                         // in FragmentManager's list
+    private static int REQUEST_DATE = 0; // request code for date to id DatePickerFragment reporting back
 
     private Crime mCrime;
     private EditText mTitleField;
@@ -86,6 +87,7 @@ public class CrimeFragment extends Fragment {
                 FragmentManager manager = getFragmentManager(); // get FM associated with this fragment's activity
                 DatePickerFragment dialog = DatePickerFragment
                         .newInstance(mCrime.getDate()); // create new DPF and passes date to it
+                dialog.setTargetFragment(CrimeFragment.this, REQUEST_DATE); // set this fragment as the target fragment of DPF
                 dialog.show(manager, DIALOG_DATE); // call DPF's show() method, passing in fManager and id string
             }
         });
