@@ -84,7 +84,8 @@ public class CrimeFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 FragmentManager manager = getFragmentManager(); // get FM associated with this fragment's activity
-                DatePickerFragment dialog = new DatePickerFragment(); // create new DPF
+                DatePickerFragment dialog = DatePickerFragment
+                        .newInstance(mCrime.getDate()); // create new DPF and passes date to it
                 dialog.show(manager, DIALOG_DATE); // call DPF's show() method, passing in fManager and id string
             }
         });
