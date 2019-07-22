@@ -83,7 +83,7 @@ public class CrimeFragment extends Fragment {
         });
 
         mDateButton = (Button) v.findViewById(R.id.crime_date); // Inflate button
-        mDateButton.setText(mCrime.getDate().toString());   // Set button text to date of mCrime object (current date by default)
+        updateDate();
         mDateButton.setOnClickListener(new OnClickListener() { // Create DatePicker dialog
             @Override
             public void onClick(View view) {
@@ -117,7 +117,14 @@ public class CrimeFragment extends Fragment {
         if (requestCode == REQUEST_DATE) {
             Date date = (Date) data.getSerializableExtra(DatePickerFragment.EXTRA_DATE);
             mCrime.setDate(date);
-            mDateButton.setText(mCrime.getDate().toString());
+            updateDate();
         }
+    }
+
+    /**
+     * Updates DateButton with date in Crime object
+     */
+    private void updateDate() {
+        mDateButton.setText(mCrime.getDate().toString());
     }
 }
