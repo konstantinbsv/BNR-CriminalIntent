@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.text.format.DateFormat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,6 +32,7 @@ public class CrimeFragment extends Fragment {
     private Crime mCrime;
     private EditText mTitleField;
     private Button mDateButton;
+    private Button mTimeButton;
     private CheckBox mSolvedCheckBox;
 
     /**
@@ -88,10 +90,20 @@ public class CrimeFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 FragmentManager manager = getFragmentManager(); // get FM associated with this fragment's activity
-                DatePickerFragment dialog = DatePickerFragment
+                DatePickerFragment dateDialog = DatePickerFragment
                         .newInstance(mCrime.getDate()); // create new DPF and passes date to it
-                dialog.setTargetFragment(CrimeFragment.this, REQUEST_DATE); // set this fragment as the target fragment of DPF
-                dialog.show(manager, DIALOG_DATE); // call DPF's show() method, passing in fManager and id string
+                dateDialog.setTargetFragment(CrimeFragment.this, REQUEST_DATE); // set this fragment as the target fragment of DPF
+                dateDialog.show(manager, DIALOG_DATE); // call DPF's show() method, passing in fManager and id string
+            }
+        });
+
+        mTimeButton = (Button) v.findViewById(R.id.crime_time);
+        updateTime();
+        mTimeButton.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                FragmentManager manager = getFragmentManager();
+                TimePickerFragment timeDialog = new TimePickerFragment();
             }
         });
 
@@ -119,12 +131,22 @@ public class CrimeFragment extends Fragment {
             mCrime.setDate(date);
             updateDate();
         }
+
     }
 
     /**
      * Updates DateButton with date in Crime object
      */
     private void updateDate() {
-        mDateButton.setText(mCrime.getDate().toString());
+        CharSequence date = DateFormat.format("EEEE, MMM d, yyyy", mCrime.getDate());
+        mDateButton.setText(date);
+    }
+
+    /**
+     * Updates TimeButton with time in Crime object
+     */
+    private void updateTime() {
+        CharSequence time = DateFormat.format("HH:mm z", mCrime.getDate());
+        mDateButton.setText(time);
     }
 }
