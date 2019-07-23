@@ -1,10 +1,12 @@
 package com.bignerdranch.android.criminalintent;
 
+import android.app.Dialog;
 import android.os.Bundle;
 import android.widget.TimePicker;
 
 import androidx.fragment.app.DialogFragment;
 
+import java.util.Calendar;
 import java.util.Date;
 
 public class TimePickerFragment extends DialogFragment {
@@ -21,6 +23,16 @@ public class TimePickerFragment extends DialogFragment {
         TimePickerFragment timeFragment = new TimePickerFragment();
         timeFragment.setArguments(args);
         return timeFragment;
+    }
+
+    @Override
+    public Dialog onCreateDialog(Bundle savedInstanceState) {
+        Date date = (Date) getArguments().getSerializable("ARG_TIME"); // get date from bundle arguments
+
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        int hour   = calendar.get(Calendar.HOUR);
+        int minute = calendar.get(Calendar.MINUTE);
     }
 
 }
