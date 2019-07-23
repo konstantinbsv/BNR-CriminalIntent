@@ -34,7 +34,7 @@ public class TimePickerFragment extends DialogFragment {
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
-        Date date = (Date) getArguments().getSerializable("ARG_TIME"); // get date from bundle arguments
+        Date date = (Date) getArguments().getSerializable(ARG_TIME); // get date from bundle arguments
 
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(date);
