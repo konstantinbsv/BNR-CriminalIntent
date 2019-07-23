@@ -2,6 +2,8 @@ package com.bignerdranch.android.criminalintent;
 
 import android.app.Dialog;
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
 import android.widget.TimePicker;
 
 import androidx.fragment.app.DialogFragment;
@@ -33,6 +35,18 @@ public class TimePickerFragment extends DialogFragment {
         calendar.setTime(date);
         int hour   = calendar.get(Calendar.HOUR);
         int minute = calendar.get(Calendar.MINUTE);
+
+        // Inflate layout with activity's current instance of Inflater
+        View v = LayoutInflater.from(getActivity())
+                .inflate(R.layout.dialog_time, null);
+
+        // Get reference to TimePicker widget and initialize
+        mTimePicker = (TimePicker) v.findViewById(R.id.dialog_time_picker);
+        mTimePicker.setCurrentHour(hour); // API <23
+        mTimePicker.setHour(hour); // API >=23
+        mTimePicker.setCurrentMinute(minute);
+        mTimePicker.setMinute(minute);        ;
+
     }
 
 }
