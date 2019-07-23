@@ -148,7 +148,7 @@ public class CrimeFragment extends Fragment {
      * Updates DateButton with date in Crime object
      */
     private void updateDate() {
-        CharSequence date = DateFormat.format("EEEE, MMM d, yyyy", mCrime.getDate());
+        CharSequence date = DateFormat.format("EEE, MMM d, yyyy", mCrime.getDate());
         mDateButton.setText(date);
     }
 
@@ -156,7 +156,7 @@ public class CrimeFragment extends Fragment {
      * Updates TimeButton with time in Crime object
      */
     private void updateTime() {
-        CharSequence time = DateFormat.format("HH:mm z", mCrime.getDate());
+        CharSequence time = DateFormat.format("HH:mm zzz", mCrime.getDate());
         mTimeButton.setText(time);
     }
 }
