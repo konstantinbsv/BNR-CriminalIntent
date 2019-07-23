@@ -26,8 +26,8 @@ public class CrimeFragment extends Fragment {
 
     private static String ARG_CRIME_ID = "crime_id";
     private static String DIALOG_TIME = "DialogTime";
-    private static String DIALOG_DATE = "DialogDate";   // parameter to uniquely identify DialogFragment
-                                                        // in FragmentManager's list
+    private static String DIALOG_DATE = "DialogDate";   // parameter to uniquely identify DialogFragment in FragmentManager's list
+
     private static int REQUEST_DATE = 0; // request code for date to id DatePickerFragment reporting back
     private static int REQUEST_TIME = 1; // request code for date to id TimePickerFragment reporting back
 
@@ -105,7 +105,10 @@ public class CrimeFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 FragmentManager manager = getFragmentManager();
-                TimePickerFragment timeDialog = new TimePickerFragment();
+                TimePickerFragment timeDialog = TimePickerFragment
+                    .newInstance(mCrime.getDate());
+                timeDialog.setTargetFragment(CrimeFragment.this, REQUEST_TIME);
+                timeDialog.show(manager, DIALOG_TIME);
             }
         });
 
