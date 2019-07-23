@@ -41,6 +41,8 @@ public class DatePickerFragment  extends DialogFragment {
         int year = calendar.get(Calendar.YEAR);
         int month = calendar.get(Calendar.MONTH);
         int day = calendar.get(Calendar.DAY_OF_MONTH);
+        final int hour = calendar.get(Calendar.HOUR);
+        final int minute = calendar.get(Calendar.MINUTE);
 
         View v = LayoutInflater.from(getActivity()) // get LayoutInflater instance hooked up to the current context
                 .inflate(R.layout.dialog_date, null); // inflate DatePicker from specified xml
@@ -57,7 +59,7 @@ public class DatePickerFragment  extends DialogFragment {
                         int year  = mDatePicker.getYear();
                         int month = mDatePicker.getMonth();
                         int day   = mDatePicker.getDayOfMonth();
-                        Date date = new GregorianCalendar(year, month, day).getTime(); // create new Date object with date from DatePicker
+                        Date date = new GregorianCalendar(year, month, day, hour, minute).getTime(); // create new Date object with date from DatePicker
                         sendResult(Activity.RESULT_OK, date); // send date back to target
                     }
                 })
