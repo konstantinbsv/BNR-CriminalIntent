@@ -64,11 +64,30 @@ public class TimePickerFragment extends DialogFragment {
                         int minute = mTimePicker.getCurrentMinute();
 
                         Date date = new GregorianCalendar(year, month, day, hour, minute).getTime();
+                        sendResult(Activity.RESULT_OK, date);
                     }
                 })
                 .create();
 
     }
 
-    
+    /**
+     * The method will put the Date passed to it on an intent as an extra and send the
+     * intent to the target fragment by calling onActivityResult(int,int,Intent).
+     * A result code is passed as well.
+     * @param resultCode result code returned to target fragment
+     * @param date Date to put on Intent
+     */
+    private void sendResult(int resultCode, Date date) {
+        if (getTargetFragment() == null) {
+            return;
+        }
+
+        Intent intent = new Intent(); // create new intent
+        intent.putExtra(EXTRA_TIME, date); // put date as an extra to the intent
+
+        // get target fragment and pass data back to it
+        getTargetFragment().onActivityResult(getTargetRequestCode(), resultCode, intent);
+    }
+
 }
