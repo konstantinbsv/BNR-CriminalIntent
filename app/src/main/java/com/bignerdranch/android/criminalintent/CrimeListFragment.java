@@ -79,6 +79,7 @@ public class CrimeListFragment extends Fragment {
         }
         //If it does, notify it that the data set may have changed
         else{
+            mAdapter.replaceList(crimes);
             mAdapter.notifyItemChanged(mClickedPosition);   //Update only clicked item
         }
     }
@@ -174,6 +175,10 @@ public class CrimeListFragment extends Fragment {
             @Override
             public int getItemCount(){
                 return mCrimes.size();
+            }
+
+            public void replaceList(List<Crime> crimes) {
+                mCrimes = crimes;
             }
         }
 }
