@@ -6,4 +6,12 @@
     android:layout_height="wrap_content"
     android:calendarViewShown="false" >
 
+    <Button
+        android:id="@+id/positive_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:text="@android:string/ok" />
+
 </DatePicker>
+
