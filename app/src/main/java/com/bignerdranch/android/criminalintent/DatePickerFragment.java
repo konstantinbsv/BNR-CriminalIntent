@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.DatePicker;
 
 import androidx.appcompat.app.AlertDialog;
@@ -33,7 +34,7 @@ public class DatePickerFragment  extends DialogFragment {
     }
 
     @Override
-    public Dialog onCreateDialog(Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         Date date = (Date) getArguments().getSerializable(ARG_DATE); // get Date from arguments budle
 
         Calendar calendar = Calendar.getInstance(); // Gets a calendar using default timezone and locale
@@ -44,14 +45,14 @@ public class DatePickerFragment  extends DialogFragment {
         final int hour = calendar.get(Calendar.HOUR);
         final int minute = calendar.get(Calendar.MINUTE);
 
-        View v = LayoutInflater.from(getActivity()) // get LayoutInflater instance hooked up to the current context
-                .inflate(R.layout.dialog_date, null); // inflate DatePicker from specified xml
+        View view = inflater // get LayoutInflater instance hooked up to the current context
+                .inflate(R.layout.dialog_date, container, false); // inflate DatePicker from specified xml
 
-        mDatePicker = (DatePicker) v.findViewById(R.id.dialog_date_picker); // return reference to first descendant view in hierarchy with given id
+        mDatePicker = (DatePicker) view.findViewById(R.id.dialog_date_picker); // return reference to first descendant view in hierarchy with given id
         mDatePicker.init(year, month, day, null); // initialize DatePicker
 
-        return new AlertDialog.Builder(getActivity())
-                .setView(v) // configure dialog to display DatePicker b/en title and button(s) (sets custom view)
+        AlertDialog alertDialog = new AlertDialog.Builder(getActivity())
+                .setView(view) // configure dialog to display DatePicker b/en title and button(s) (sets custom view)
                 .setTitle(R.string.date_picker_title)
                 .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() { // set OCL on positive button
                     @Override
@@ -64,6 +65,9 @@ public class DatePickerFragment  extends DialogFragment {
                     }
                 })
                 .create();
+
+
+        return view;
     }
 
     /**
