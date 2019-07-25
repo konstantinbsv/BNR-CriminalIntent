@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.DatePicker;
 
 import androidx.appcompat.app.AlertDialog;
@@ -23,6 +24,7 @@ public class DatePickerFragment  extends DialogFragment {
     private static final String ARG_DATE = "date";
 
     private DatePicker mDatePicker;
+    private Button mPositiveButton;
 
     public static DatePickerFragment newInstance(Date date){
         Bundle args = new Bundle();
@@ -66,6 +68,17 @@ public class DatePickerFragment  extends DialogFragment {
                 })
                 .create();
 
+        mPositiveButton = (Button) view.findViewById(R.id.positive_button);
+        mPositiveButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                int year  = mDatePicker.getYear();
+                int month = mDatePicker.getMonth();
+                int day   = mDatePicker.getDayOfMonth();
+                Date date = new GregorianCalendar(year, month, day, hour, minute).getTime(); // create new Date object with date from DatePicker
+                sendResult(Activity.RESULT_OK, date); // send date back to target
+            }
+        });
 
         return view;
     }
