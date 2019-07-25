@@ -91,11 +91,16 @@ public class CrimeFragment extends Fragment {
         mDateButton.setOnClickListener(new OnClickListener() { // Create DatePicker dialog
             @Override
             public void onClick(View view) {
-                FragmentManager manager = getFragmentManager(); // get FM associated with this fragment's activity
-                DatePickerFragment dateDialog = DatePickerFragment
-                        .newInstance(mCrime.getDate()); // create new DPF and passes date to it
-                dateDialog.setTargetFragment(CrimeFragment.this, REQUEST_DATE); // set this fragment as the target fragment of DPF
-                dateDialog.show(manager, DIALOG_DATE); // call DPF's show() method, passing in fManager and id string
+                if (getResources().getBoolean(R.bool.isTablet)) {
+                    FragmentManager manager = getFragmentManager(); // get FM associated with this fragment's activity
+                    DatePickerFragment dateFragment = DatePickerFragment
+                            .newInstance(mCrime.getDate()); // create new DPF and passes date to it
+                    dateFragment.setTargetFragment(CrimeFragment.this, REQUEST_DATE); // set this fragment as the target fragment of DPF
+                    dateFragment.show(manager, DIALOG_DATE); // call DPF's show() method, passing in fManager and id string
+                } else {
+                    Intent intent = DatePickerActivity.newIntent(getActivity(), mCrime.getDate());
+                    startActivityForResult(intent, REQUEST_DATE);
+                }
             }
         });
 
