@@ -53,21 +53,6 @@ public class DatePickerFragment  extends DialogFragment {
         mDatePicker = (DatePicker) view.findViewById(R.id.dialog_date_picker); // return reference to first descendant view in hierarchy with given id
         mDatePicker.init(year, month, day, null); // initialize DatePicker
 
-        AlertDialog alertDialog = new AlertDialog.Builder(getActivity())
-                .setView(view) // configure dialog to display DatePicker b/en title and button(s) (sets custom view)
-                .setTitle(R.string.date_picker_title)
-                .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() { // set OCL on positive button
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int which) {
-                        int year  = mDatePicker.getYear();
-                        int month = mDatePicker.getMonth();
-                        int day   = mDatePicker.getDayOfMonth();
-                        Date date = new GregorianCalendar(year, month, day, hour, minute).getTime(); // create new Date object with date from DatePicker
-                        sendResult(Activity.RESULT_OK, date); // send date back to target
-                    }
-                })
-                .create();
-
         mPositiveButton = (Button) view.findViewById(R.id.positive_button);
         mPositiveButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -76,7 +61,7 @@ public class DatePickerFragment  extends DialogFragment {
                 int month = mDatePicker.getMonth();
                 int day   = mDatePicker.getDayOfMonth();
                 Date date = new GregorianCalendar(year, month, day, hour, minute).getTime(); // create new Date object with date from DatePicker
-                sendResult(Activity.RESULT_OK, date); // send date back to target
+                sendResult(Activity.RESULT_OK, date); // send date back to target]
             }
         });
 
@@ -91,14 +76,15 @@ public class DatePickerFragment  extends DialogFragment {
      * @param date Date to put on Intent
      */
     private void sendResult(int resultCode, Date date) {
+        Intent intent = new Intent(); // create new intent
+        intent.putExtra(EXTRA_DATE, date); // put date as an extra to the intent
+
         if (getTargetFragment() == null) {
             return;
         }
 
-        Intent intent = new Intent(); // create new intent
-        intent.putExtra(EXTRA_DATE, date); // put date as an extra to the intent
-
         // get target fragment and pass data back to it
         getTargetFragment().onActivityResult(getTargetRequestCode(), resultCode, intent);
+        dismiss();
     }
 }
