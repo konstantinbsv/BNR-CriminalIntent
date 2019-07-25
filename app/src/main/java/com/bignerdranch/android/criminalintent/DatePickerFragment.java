@@ -80,11 +80,12 @@ public class DatePickerFragment  extends DialogFragment {
         intent.putExtra(EXTRA_DATE, date); // put date as an extra to the intent
 
         if (getTargetFragment() == null) {
-            return;
+            getActivity().setResult(resultCode, intent);
+            getActivity().finish();
+        } else {
+            // get target fragment and pass data back to it
+            getTargetFragment().onActivityResult(getTargetRequestCode(), resultCode, intent);
+            dismiss();
         }
-
-        // get target fragment and pass data back to it
-        getTargetFragment().onActivityResult(getTargetRequestCode(), resultCode, intent);
-        dismiss();
     }
 }
