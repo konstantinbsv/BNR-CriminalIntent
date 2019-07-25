@@ -79,10 +79,11 @@ public class DatePickerFragment  extends DialogFragment {
         Intent intent = new Intent(); // create new intent
         intent.putExtra(EXTRA_DATE, date); // put date as an extra to the intent
 
+        // if DPF was called from an activity with startActivityForResult(Intent,result)
         if (getTargetFragment() == null) {
             getActivity().setResult(resultCode, intent);
             getActivity().finish();
-        } else {
+        } else { // if called from a fragment with .setTargetFragment(Fragment, int)
             // get target fragment and pass data back to it
             getTargetFragment().onActivityResult(getTargetRequestCode(), resultCode, intent);
             dismiss();
