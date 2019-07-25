@@ -4,10 +4,12 @@
     android:id="@+id/dialog_date_picker"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:calendarViewShown="false" >
+    android:calendarViewShown="false"
+    android:layout_gravity="center" >
 
     <Button
         android:id="@+id/positive_button"
+        style="?attr/buttonBarPositiveButtonStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
