@@ -25,18 +25,14 @@ public class CrimeLab {
     private CrimeLab(Context context){
         mCrimes = new LinkedHashMap<>(); // Use Linked Hash Map for quick searching, insertion
                                          // and deletion, while maintaining order of items
-
-        //Populate LinkedHasHMap<UUID,Crime> mCrimes with 100 test crimes
-        for (int i = 0; i < 100; i++ ){
-            Crime crime = new Crime();      //Create new Crime instance
-            crime.setTitle("Crime #" + i);  //Set title with number
-            crime.setSolved(i % 2 == 0);    //Set even as solved
-            mCrimes.put(crime.getId(), crime);  //Put crime in LHM mCrimes with UUID as key
-        }
     }
 
-    //getCrimes getter
-    public List<Crime> getCrimes(){
+    public void addCrime(Crime c) {
+        mCrimes.put(c.getId(), c);
+    }
+
+    // getCrimes getter
+    public List<Crime> getCrimes() {
         return new ArrayList<>(mCrimes.values());
     }
 
