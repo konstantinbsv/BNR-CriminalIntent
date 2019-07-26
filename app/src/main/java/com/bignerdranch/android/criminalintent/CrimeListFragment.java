@@ -74,6 +74,8 @@ public class CrimeListFragment extends Fragment {
                 return true;
             case R.id.show_subtitle:
                 updateSubtitle();
+                mSubtitleVisible = !mSubtitleVisible;
+                getActivity().invalidateOptionsMenu();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
