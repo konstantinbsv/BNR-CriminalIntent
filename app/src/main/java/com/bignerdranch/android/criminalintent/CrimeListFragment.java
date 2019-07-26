@@ -90,6 +90,10 @@ public class CrimeListFragment extends Fragment {
         int crimeCount = crimeLab.getCrimes().size();   // get number of crimes
         String subtitle = getString(R.string.subtitle_format, crimeCount); // generate string
 
+        if (!mSubtitleVisible) {
+            subtitle = null; 
+        }
+
         AppCompatActivity activity = (AppCompatActivity) getActivity(); // cast hosting activity to AppCompatActivity
         activity.getSupportActionBar().setSubtitle(subtitle); // set subtitle (action) bar
 
