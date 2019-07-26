@@ -91,7 +91,7 @@ public class CrimeListFragment extends Fragment {
         String subtitle = getString(R.string.subtitle_format, crimeCount); // generate string
 
         if (!mSubtitleVisible) {
-            subtitle = null; 
+            subtitle = null;
         }
 
         AppCompatActivity activity = (AppCompatActivity) getActivity(); // cast hosting activity to AppCompatActivity
@@ -113,6 +113,8 @@ public class CrimeListFragment extends Fragment {
             mAdapter.replaceList(crimes);
             mAdapter.notifyItemChanged(mClickedPosition);   //Update only clicked item
         }
+
+        updateSubtitle();
     }
 
 
