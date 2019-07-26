@@ -13,6 +13,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -63,9 +64,25 @@ public class CrimeListFragment extends Fragment {
                 Intent intent = CrimePagerActivity.newIntent(getActivity(), crime.getId());
                 startActivity(intent);
                 return true;
+            case R.id.show_subtitle:
+                updateSubtitle();
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    /**
+     * Will set subtitle of toolbar to display number of crimes
+     */
+    public void updateSubtitle() {
+        CrimeLab crimeLab = CrimeLab.get(getActivity());
+        int crimeCount = crimeLab.getCrimes().size();   // get number of crimes
+        String subtitle = getString(R.string.subtitle_format, crimeCount); // generate string
+
+        AppCompatActivity activity = (AppCompatActivity) getActivity(); // cast hosting activity to AppCompatActivity
+        activity.getSupportActionBar().setSubtitle(subtitle); // set subtitle (action) bar
+
     }
 
     private void updateUI(){
