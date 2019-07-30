@@ -1,6 +1,7 @@
 package com.bignerdranch.android.criminalintent;
 
 import android.content.Intent;
+import android.media.Image;
 import android.os.Bundle;
 import android.text.format.DateFormat;
 import android.view.LayoutInflater;
@@ -9,7 +10,10 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -28,6 +32,8 @@ public class CrimeListFragment extends Fragment {
     private CrimeAdapter mAdapter;
     private int mClickedPosition;
     private boolean mSubtitleVisible;
+    private LinearLayout mEmptyViewLayout;
+    private ImageButton mEmptyViewAddButton;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -45,6 +51,9 @@ public class CrimeListFragment extends Fragment {
         if (savedInstanceState != null) {
             mSubtitleVisible = savedInstanceState.getBoolean(SAVED_SUBTITLE_VISIBLE);
         }
+
+        mEmptyViewLayout = (LinearLayout) view.findViewById(R.id.empty_view_layout);
+        mEmptyViewAddButton = (ImageButton) view.findViewById(R.id.empty_view_button);
 
         updateUI();
 
@@ -126,6 +135,21 @@ public class CrimeListFragment extends Fragment {
         else{
             mAdapter.replaceList(crimes);
             mAdapter.notifyItemChanged(mClickedPosition);   //Update only clicked item
+        }
+
+        if (crimes.isEmpty()) {
+            mEmptyViewLayout.setVisibility(View.VISIBLE);
+            mEmptyViewAddButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Crime crime = new Crime();
+                    CrimeLab.get(getActivity()).addCrime(crime);
+                    Intent intent = CrimePagerActivity.newIntent(getActivity(), crime.getId());
+                    startActivity(intent);
+                }
+            });
+        } else {
+            mEmptyViewLayout.setVisibility(View.GONE);
         }
 
         updateSubtitle();
