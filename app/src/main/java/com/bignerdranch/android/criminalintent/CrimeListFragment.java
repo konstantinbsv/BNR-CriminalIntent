@@ -89,10 +89,7 @@ public class CrimeListFragment extends Fragment {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.new_crime:
-                Crime crime = new Crime();
-                CrimeLab.get(getActivity()).addCrime(crime);
-                Intent intent = CrimePagerActivity.newIntent(getActivity(), crime.getId());
-                startActivity(intent);
+                createNewCrime();
                 return true;
             case R.id.show_subtitle:
                 mSubtitleVisible = !mSubtitleVisible;
@@ -142,10 +139,7 @@ public class CrimeListFragment extends Fragment {
             mEmptyViewAddButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Crime crime = new Crime();
-                    CrimeLab.get(getActivity()).addCrime(crime);
-                    Intent intent = CrimePagerActivity.newIntent(getActivity(), crime.getId());
-                    startActivity(intent);
+                    createNewCrime();
                 }
             });
         } else {
@@ -153,6 +147,13 @@ public class CrimeListFragment extends Fragment {
         }
 
         updateSubtitle();
+    }
+
+    private void createNewCrime() {
+        Crime crime = new Crime();
+        CrimeLab.get(getActivity()).addCrime(crime);
+        Intent intent = CrimePagerActivity.newIntent(getActivity(), crime.getId());
+        startActivity(intent);
     }
 
 
