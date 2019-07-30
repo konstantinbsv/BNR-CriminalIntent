@@ -32,7 +32,7 @@ public class CrimeLab {
     }
 
     public void deleteCrime(Crime c) {
-        mCrimes.remove(c);
+        mCrimes.remove(c.getId());
     }
 
     // getCrimes getter
