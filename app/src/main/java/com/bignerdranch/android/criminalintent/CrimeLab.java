@@ -1,6 +1,9 @@
 package com.bignerdranch.android.criminalintent;
 
 import android.content.Context;
+import android.database.sqlite.SQLiteDatabase;
+
+import com.bignerdranch.android.criminalintent.database.CrimeBaseHelper;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -12,7 +15,9 @@ public class CrimeLab {
     private static CrimeLab sCrimeLab;
 
     //private List<Crime> mCrimes;
-    Map<UUID,Crime> mCrimes;
+    private Map<UUID,Crime> mCrimes;
+    private Context mContext;
+    private SQLiteDatabase mDatabase;
 
     //Singleton method for CrimeLab
     public static CrimeLab get(Context context){
@@ -23,6 +28,8 @@ public class CrimeLab {
     }
     //Private constructor for singleton
     private CrimeLab(Context context){
+        mContext = context.getApplicationContext();
+        mDatabase = new CrimeBaseHelper(mContext).getWritableDatabase();
         mCrimes = new LinkedHashMap<>(); // Use Linked Hash Map for quick searching, insertion
                                          // and deletion, while maintaining order of items
     }
