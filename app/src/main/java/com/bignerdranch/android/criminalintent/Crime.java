@@ -10,8 +10,12 @@ public class Crime {
     private boolean mSolved;
 
     public Crime(){
-        mId = UUID.randomUUID();
-        mDate = new Date();   //Empty constructor for date returns current date by default
+        this(UUID.randomUUID());
+    }
+
+    public Crime(UUID id){
+        mId = id;
+        mDate = new Date(); //Empty constructor for date returns current date by default
     }
 
     //Getters and Setters
