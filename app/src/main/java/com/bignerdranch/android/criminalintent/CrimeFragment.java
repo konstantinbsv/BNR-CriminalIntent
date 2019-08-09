@@ -167,6 +167,14 @@ public class CrimeFragment extends Fragment {
         }
     }
 
+    // will update crime in database when CrimeFragment is done
+    @Override
+    public void onPause() {
+        super.onPause();
+
+        CrimeLab.get(getActivity()).updateCrime(mCrime);
+    }
+
     /**
      * Updates DateButton with date in Crime object
      */
