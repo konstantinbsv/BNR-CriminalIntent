@@ -2,6 +2,8 @@ package com.bignerdranch.android.criminalintent;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.database.Cursor;
+import android.net.Uri;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.text.Editable;
@@ -170,12 +172,36 @@ public class CrimeFragment extends Fragment {
             Date date = (Date) data.getSerializableExtra(DatePickerFragment.EXTRA_DATE);
             mCrime.setDate(date);
             updateDate();
-        }
 
-        if (requestCode == REQUEST_TIME) {
+        } else if (requestCode == REQUEST_TIME) {
             Date date = (Date) data.getSerializableExtra(TimePickerFragment.EXTRA_TIME);
             mCrime.setDate(date);
             updateTime();
+
+        } else if (requestCode == REQUEST_CONTACT && data != null) {
+            Uri contactUri = data.getData();
+            // Specify which fields you want your query to return values for
+            String[] queryFields = new String[] {ContactsContract.Contacts.DISPLAY_NAME};
+            // Perform query - the contractUri is like a "where" clause here
+            Cursor c = getActivity().getContentResolver()
+                    .query(contactUri, queryFields, null, null, null);
+
+            try {
+                // Double-check that we actually got results
+                if (c.getCount() == 0) {
+                    return;
+                }
+
+                // Pull out first column of the first row of data -
+                // this is our suspect's name
+                c.moveToFirst();
+                String suspect = c.getString(0);
+                mCrime.setSuspect(suspect);
+                mSuspectButton.setText(suspect);
+            } finally {
+                c.close();
+            }
+
         }
     }
 
