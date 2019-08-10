@@ -3,6 +3,7 @@ package com.bignerdranch.android.criminalintent;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.text.format.DateFormat;
@@ -33,12 +34,14 @@ public class CrimeFragment extends Fragment {
 
     private static int REQUEST_DATE = 0; // request code for date to id DatePickerFragment reporting back
     private static int REQUEST_TIME = 1; // request code for date to id TimePickerFragment reporting back
+    private static int REQUEST_CONTACT = 2; // to id contact activity reporting back
 
     private Crime mCrime;
     private EditText mTitleField;
     private Button mDateButton;
     private Button mTimeButton;
     private CheckBox mSolvedCheckBox;
+    private Button mSuspectButton;
     private Button mReportButton;
 
     /**
@@ -139,6 +142,20 @@ public class CrimeFragment extends Fragment {
             }
 
         });
+
+        final Intent pickContact = new Intent(Intent.ACTION_PICK, ContactsContract.Contacts.CONTENT_URI);
+        mSuspectButton = (Button) v.findViewById(R.id.crime_suspect);
+        mSuspectButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivityForResult(pickContact, REQUEST_CONTACT);
+            }
+        });
+
+        // if we know the suspect set name as suspect button text
+        if (mCrime.getSuspect() != null) {
+            mSuspectButton.setText(mCrime.getSuspect());
+        }
 
         return v;
     }
