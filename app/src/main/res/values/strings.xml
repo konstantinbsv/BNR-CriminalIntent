@@ -17,4 +17,6 @@
     </plurals>
     <string name="delete_crime">Delete Crime</string>
     <string name="empty_list_message">No crimes. Add one.</string>
+    <string name="crime_suspect_text">Choose Suspect</string>
+    <string name="crime_report_text">Send Crime Report</string>
 </resources>
