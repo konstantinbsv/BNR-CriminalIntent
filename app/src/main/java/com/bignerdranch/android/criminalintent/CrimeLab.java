@@ -52,12 +52,40 @@ public class CrimeLab {
 
     // getCrimes getter
     public List<Crime> getCrimes() {
-        return new ArrayList<>();
+        List<Crime> crimes = new ArrayList<>();
+
+        CrimeCursorWrapper cursor = queryCrimes(null, null); // get cursor with all crimes wrapped in CCW
+
+        try {
+            cursor.moveToFirst();
+            while (!cursor.isAfterLast()) {
+                crimes.add(cursor.getCrime());
+                cursor.moveToNext();
+            }
+        } finally {
+            cursor.close(); // important, or you may eventually run out of open file handles and crash the app
+        }
+
+        return crimes;
     }
 
     //Get specific crime by UUID
     public Crime getCrime(UUID id){
-        // return mCrimes.get(id);
+
+        CrimeCursorWrapper cursor = queryCrimes(
+                CrimeTable.Cols.UUID + " = ?",
+                new String[] {id.toString()}); // get cursor at location of crime with given UUID
+
+        try {
+            if (cursor.getCount() == 0) {
+                return  null;
+            }
+
+            cursor.moveToFirst();
+            return cursor.getCrime();
+        } finally {
+            cursor.close();
+        }
     }
 
     // update rows in database
