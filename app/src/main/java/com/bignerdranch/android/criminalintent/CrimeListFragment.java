@@ -249,6 +249,7 @@ public class CrimeListFragment extends Fragment {
                 return mCrimes.size();
             }
 
+            // updates crime list with new data from database
             public void replaceList(List<Crime> crimes) {
                 mCrimes = crimes;
             }
